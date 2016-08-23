@@ -69,7 +69,7 @@ else
   echo ";) Welcome root"
 fi
 
-adduser -u $USERNAME_UID $USERNAME 
+useradd -u $USERNAME_UID --shell '/bin/bash' $USERNAME
 
 usermod -aG sudo $USERNAME
 
