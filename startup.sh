@@ -101,7 +101,7 @@ check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 chown -R deploy:deploy $USER_SSH_DIR
 check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 
-echo '$USERNAME  ALL=(NOPASSWD:ALL) ALL' >> $SUDOERS_DEPLOYFILE
+echo '$USERNAME  ALL=(NOPASSWD:ALL) ALL' > $SUDOERS_DEPLOYFILE
 check_errs $? "Failed to create sudoers file"
 
 visudo -c -f $SUDOERS_DEPLOYFILE
