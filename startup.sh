@@ -25,6 +25,8 @@
 tabs 4
 clear
 
+ROOT_UID=0
+E_NOTROOT=1
 HOMEDIR=/home
 USERNAME="deploy"
 USERNAME_UID="1979"
@@ -32,51 +34,63 @@ USERNAME_UID="1979"
 SSHDIR=".ssh"
 USER_SSH_DIR="$HOMEDIR/$USERNAME/SSHDIR"
 
-# DISTROS AND RELEASES
 RELEASE=$(lsb_release -c | cut -f 2 -d $'\t')
 DISTRO=$(lsb_release -i | cut -f 2 -d $'\t')
 
-#----- Fancy Messages -----#
-show_error(){
-echo -e "\033[1;31m$@\033[m" 1>&2
-}
-show_info(){
-echo -e "\033[1;32m$@\033[0m"
-}
-show_warning(){
-echo -e "\033[1;33m$@\033[0m"
-}
-show_question(){
-echo -e "\033[1;34m$@\033[0m"
-}
-show_success(){
-echo -e "\033[1;35m$@\033[0m"
-}
-show_header(){
-echo -e "\033[1;36m$@\033[0m"
-}
-show_listitem(){
-echo -e "\033[0;37m$@\033[0m"
+echoRed() {
+  echo -e "\E[1;31m$1"
+  echo -e '\e[0m'
 }
 
-ROOT_UID=0
+echoGreen() {
+  echo -e "\E[1;32m$1"
+  echo -e '\e[0m'
+}
+
+echoCyan() {
+  echo -e "\E[1;36m$1"
+  echo -e '\e[0m'
+}
+
+echoMagenta() {
+  echo -e "\E[1;35m$1"
+  echo -e '\e[0m'
+}
+
+check_errs()
+{
+  # Function. Parameter 1 is the return code
+  # Para. 2 is text to display on failure.
+      if [ "${1}" -ne "0" ]; then
+        echoRed "ERROR # ${1} : ${2}"
+        # as a bonus, make our script exit with the right error code.
+        exit ${1}
+      fi
+}
+
 if [ $UID -ne $ROOT_UID ]
 then                                                                                                       
-    echo ":/ You must be root to run this script... Quiting"
-exit $E_NOTROOT
+    echoRed ":/ You must be root to run this script... Quiting";
+    exit $E_NOTROOT
 else
-  show_info()
-  echo ";) Welcome root"
+    echoGreen ";) Welcome root"
+  
 fi
 
 useradd -u $USERNAME_UID --shell '/bin/bash' $USERNAME
+check_errs $? "Failed create user $USERNAME"
 
 usermod -aG sudo $USERNAME
+check_errs $? "Failed to add user $USERNAME to group sudo"
 
 mkdir -p $USER_SSH_DIR
+check_errs $? "Failed to create directory $USER_SSH_DIR"
 
 chmod 600 $USER_SSH_DIR
+check_errs $? "Failed change permission on $USER_SSH_DIR"
 
 echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRTnJn7fp32e3pitCOW5vuo4NB3wZw4arz286mk4CR/PzNyQvLE4YBKhSKCLg0Cw7iP2E8xLmUtDemjEKQZALzGZRTCDQN4Qqs4M0NFYiL1G5kYA806R6qCVxjhrQG85AK0AW5nk/rVw4IgD2/y4ojmhGCvbdW9nN522r8nZjs4d175nMyJRfohOqrNZAz/dD1Ph8U5kljg/Jz80A4t6x9E6Rl+8VolKnvo7U/k4yGWOhxsj6KutqFmdJVaiP+UCL9y8FeM4qHsVe5MpQGN+RxANhDf0OiMHZh9l0ani2Gqf3HyCbHJgE98aA1TNxVi0fJUy0gOfAsM7hzj3TxY5yR FOWLKS@AVPHR-2F1SP32 > "$USER_SSH_DIR/authorized_keys"
+check_errs $? "Failed to add public key to account $USER_SSH_DIR/authorized_keys"
 
 chmod 700 "$USER_SSH_DIR/authorized_keys"
+check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
