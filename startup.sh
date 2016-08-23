@@ -74,7 +74,6 @@ then
     exit $E_NOTROOT
 else
     echoGreen ";) Welcome root"
-  
 fi
 
 useradd -u $USERNAME_UID --shell '/bin/bash' $USERNAME
@@ -89,8 +88,14 @@ check_errs $? "Failed to create directory $USER_SSH_DIR"
 chmod 600 $USER_SSH_DIR
 check_errs $? "Failed change permission on $USER_SSH_DIR"
 
-echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRTnJn7fp32e3pitCOW5vuo4NB3wZw4arz286mk4CR/PzNyQvLE4YBKhSKCLg0Cw7iP2E8xLmUtDemjEKQZALzGZRTCDQN4Qqs4M0NFYiL1G5kYA806R6qCVxjhrQG85AK0AW5nk/rVw4IgD2/y4ojmhGCvbdW9nN522r8nZjs4d175nMyJRfohOqrNZAz/dD1Ph8U5kljg/Jz80A4t6x9E6Rl+8VolKnvo7U/k4yGWOhxsj6KutqFmdJVaiP+UCL9y8FeM4qHsVe5MpQGN+RxANhDf0OiMHZh9l0ani2Gqf3HyCbHJgE98aA1TNxVi0fJUy0gOfAsM7hzj3TxY5yR FOWLKS@AVPHR-2F1SP32 > "$USER_SSH_DIR/authorized_keys"
+echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRTnJn7fp32e3pitCOW5vuo4NB3wZw4arz286mk4CR/PzNyQvLE4YBKhSKCLg0Cw7iP2E8xLmUtDemjEKQZALzGZRTCDQN4Qqs4M0NFYiL1G5kYA806R6qCVxjhrQG85AK0AW5nk/rVw4IgD2/y4ojmhGCvbdW9nN522r8nZjs4d175nMyJRfohOqrNZAz/dD1Ph8U5kljg/Jz80A4t6x9E6Rl+8VolKnvo7U/k4yGWOhxsj6KutqFmdJVaiP+UCL9y8FeM4qHsVe5MpQGN+RxANhDf0OiMHZh9l0ani2Gqf3HyCbHJgE98aA1TNxVi0fJUy0gOfAsM7hzj3TxY5yR FOWLKS@AVPHR-2F1SP32' > "$USER_SSH_DIR/authorized_keys"
 check_errs $? "Failed to add public key to account $USER_SSH_DIR/authorized_keys"
 
 chmod 700 "$USER_SSH_DIR/authorized_keys"
 check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
+
+chown -R deploy:deploy $USER_SSH_DIR
+check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
+
+echoGreen "Script has been executed successfully"
+exit 0
