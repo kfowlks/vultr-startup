@@ -30,7 +30,7 @@ E_NOTROOT=1
 HOMEDIR=/home
 USERNAME="deploy"
 USERNAME_UID="1979"
-
+SUDOERS_DEPLOYFILE="/etc/sudoers.d/90-automate-deploy"
 SSHDIR=".ssh"
 USER_SSH_DIR="$HOMEDIR/$USERNAME/SSHDIR"
 
@@ -64,6 +64,10 @@ check_errs()
       if [ "${1}" -ne "0" ]; then
         echoRed "ERROR # ${1} : ${2}"
         # as a bonus, make our script exit with the right error code.
+        if [ "${3}" -ne "0" ]; then
+          rm -f ${3}
+        fi
+
         exit ${1}
       fi
 }
@@ -96,6 +100,12 @@ check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 
 chown -R deploy:deploy $USER_SSH_DIR
 check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
+
+echo '$USERNAME  ALL=(NOPASSWD:ALL) ALL' >> $SUDOERS_DEPLOYFILE
+check_errs $? "Failed to create sudoers file"
+
+visudo -c -f $SUDOERS_DEPLOYFILE
+check_errs $? "Validate suders file $SUDOERS_DEPLOYFILE" $SUDOERS_DEPLOYFILE
 
 echoGreen "Script has been executed successfully"
 exit 0
