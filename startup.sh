@@ -29,7 +29,7 @@ ROOT_UID=0
 E_NOTROOT=1
 HOMEDIR=/home
 USERNAME=${USERNAME:-deploy}
-USERNAME_UID="1979"
+USERNAME_UID=${USERNAME:-1979}
 SUDOERS_DEPLOYFILE="/etc/sudoers.d/automate-deploy"
 SSHDIR=".ssh"
 USER_SSH_DIR="$HOMEDIR/$USERNAME/$SSHDIR"
@@ -65,8 +65,10 @@ check_errs()
       if [ "${1}" -ne "0" ]; then
         echoRed "ERROR # ${1} : ${2}"
         # as a bonus, make our script exit with the right error code.
-        if [ "${3}" -ne "0" ]; then
+        if [ "$#" -eq 3 ]; then
+          echoCyan "cleaning file from failed script attempt "
           rm -f ${3}
+          check_errs $? "Failed remove file ${3}"
         fi
 
         exit ${1}
