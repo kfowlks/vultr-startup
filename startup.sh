@@ -94,7 +94,7 @@ check_errs $? "Failed to add user $USERNAME to group sudo"
 mkdir -p $USER_SSH_DIR
 check_errs $? "Failed to create directory $USER_SSH_DIR"
 
-chmod 600 $USER_SSH_DIR
+chmod 700 $USER_SSH_DIR
 check_errs $? "Failed change permission on $USER_SSH_DIR"
 
 echo $SSH_PUB_KEY1 > "$USER_SSH_DIR/authorized_keys"
