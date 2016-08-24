@@ -68,7 +68,7 @@ check_errs()
         if [ "$#" -eq 3 ]; then
           echoCyan "cleaning file from failed script attempt "
           rm -f ${3}
-          check_errs $? "Failed remove file ${3}"
+          check_errs $? "Failed to remove file - ${3}"
         fi
 
         exit ${1}
@@ -77,10 +77,10 @@ check_errs()
 
 if [ $UID -ne $ROOT_UID ]
 then                                                                                                       
-    echoRed ":/ You must be root to run this script... Quiting";
+    echoRed "﴾͡๏̯͡๏﴿ O'RLY? Sorry You must be root to run this script... Quiting";
     exit $E_NOTROOT
 else
-    echoGreen ";) Welcome root"
+    echoGreen "(ง ͠° ͟ل͜ ͡°)ง go go get em cowboy"
 fi
 
 useradd -u $USERNAME_UID --shell '/bin/bash' $USERNAME
