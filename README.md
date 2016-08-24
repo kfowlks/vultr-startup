@@ -11,16 +11,16 @@ After this all other changes should be issued from your server managment tools e
 ###Reference
 The below can be overridden by exporting new environmental shell values before executing the script (See example under usage)
 
-*export USERNAME=deployer
-*export USERNAME_UID=2079
-*export SSH_PUB_KEY1='YOUR PUBLIC KEY HERE'
+* export USERNAME=deployer
+* export USERNAME_UID=2079
+* export SSH_PUB_KEY1='YOUR PUBLIC KEY HERE'
 
 ###Requires
 
-*Ubuntu 16.04 x64
-*WGET
-*BASH
-*SUDERS
+* Ubuntu 16.04 x64
+* WGET
+* BASH
+* SUDERS
 
 ### Version
 0.0.1
