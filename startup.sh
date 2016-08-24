@@ -30,7 +30,7 @@ E_NOTROOT=1
 HOMEDIR=/home
 USERNAME="deploy"
 USERNAME_UID="1979"
-SUDOERS_DEPLOYFILE="/etc/sudoers.d/90-automate-deploy"
+SUDOERS_DEPLOYFILE="/etc/sudoers.d/automate-deploy"
 SSHDIR=".ssh"
 USER_SSH_DIR="$HOMEDIR/$USERNAME/SSHDIR"
 
@@ -101,7 +101,7 @@ check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 chown -R deploy:deploy $USER_SSH_DIR
 check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 
-echo '$USERNAME  ALL=(NOPASSWD:ALL) ALL' > $SUDOERS_DEPLOYFILE
+echo "$USERNAME	ALL = NOPASSWD: ALL" > $SUDOERS_DEPLOYFILE
 check_errs $? "Failed to create sudoers file"
 
 visudo -c -f $SUDOERS_DEPLOYFILE
