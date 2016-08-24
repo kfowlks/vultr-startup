@@ -86,6 +86,8 @@ fi
 useradd -u $USERNAME_UID --shell '/bin/bash' $USERNAME
 check_errs $? "Failed create user $USERNAME"
 
+echoGreen "$USERNAME with UID:$USERNAME_UID was successfully created!"
+
 usermod -aG sudo $USERNAME
 check_errs $? "Failed to add user $USERNAME to group sudo"
 
@@ -104,11 +106,15 @@ check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 chown -R $USERNAME:$USERNAME $USER_SSH_DIR
 check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 
+echoGreen "SSH PUBLIC Key has been successfully added to USER:$USERNAME"
+
 echo "$USERNAME	ALL = NOPASSWD: ALL" > $SUDOERS_DEPLOYFILE
 check_errs $? "Failed to create sudoers file"
 
 visudo -c -f $SUDOERS_DEPLOYFILE
 check_errs $? "Validate suders file $SUDOERS_DEPLOYFILE" $SUDOERS_DEPLOYFILE
+
+echoGreen "USER:$USERNAME has been successfully added to custom suders file"
 
 echoGreen "Script has been executed successfully"
 exit 0
