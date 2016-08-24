@@ -101,7 +101,7 @@ check_errs $? "Failed to add public key to account $USER_SSH_DIR/authorized_keys
 chmod 700 "$USER_SSH_DIR/authorized_keys"
 check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 
-chown -R deploy:deploy $USER_SSH_DIR
+chown -R $USERNAME:$USERNAME $USER_SSH_DIR
 check_errs $? "Failed to modifiy permissions on $USER_SSH_DIR/authorized_keys"
 
 echo "$USERNAME	ALL = NOPASSWD: ALL" > $SUDOERS_DEPLOYFILE
