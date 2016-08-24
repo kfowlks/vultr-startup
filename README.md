@@ -1,4 +1,4 @@
-# Vultr minimal rundeck post install script
+# Vultr minimal rundeck post install script for Ubuntu 16.04
 
 This single bash script can be called from the vultr Startup Script section of your instance. This will script does the below task
 
@@ -13,9 +13,8 @@ After this all other changes change be made from Rundeck and Ansible/Puppet
 
 ###Requires
 
-Ubuntu 16.04
-
-Under CYGWIN run the below to install pip
+Ubuntu 16.04 x64
+BASH
 
 ### Version
 0.0.1
