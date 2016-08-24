@@ -6,7 +6,7 @@ This single bash script can be called from the vultr Startup Script section of y
 + Adds public key to newly created user
 + Adds newly created user to sudoers with NOPASSWD
  
-After this all other changes should be issued from your server managment tools e.g. Ansible/Puppet/Fabric
+After this all other changes should be issued from your server management tools e.g. Ansible/Puppet/Fabric
 
 ###Reference
 The below can be overridden by exporting new environmental shell values before executing the script (See example under usage)
