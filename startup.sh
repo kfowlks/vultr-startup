@@ -32,7 +32,7 @@ USERNAME="deploy"
 USERNAME_UID="1979"
 SUDOERS_DEPLOYFILE="/etc/sudoers.d/automate-deploy"
 SSHDIR=".ssh"
-USER_SSH_DIR="$HOMEDIR/$USERNAME/SSHDIR"
+USER_SSH_DIR="$HOMEDIR/$USERNAME/$SSHDIR"
 
 RELEASE=$(lsb_release -c | cut -f 2 -d $'\t')
 DISTRO=$(lsb_release -i | cut -f 2 -d $'\t')
