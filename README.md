@@ -1,26 +1,26 @@
 # Vultr minimal rundeck post install script for Ubuntu 16.04
 
-This single bash script can be called from the vultr Startup Script section of your instance. This will script does the below task
+This single bash script can be called from the vultr Startup Script section of your instance. This script performs the below tasks.
 
-+ Creates user to be used by Rundeck
-+ Added public key to newly created user
-+ Added newly created user to sudoers with NOPASSWD
++ Creates new user to be used by Rundeck/Ansible/Puppet
++ Adds public key to newly created user
++ Adds newly created user to sudoers with NOPASSWD
  
-After this all other changes change be made from Rundeck and Ansible/Puppet
+After this all other changes should be issued from your server managment tools e.g. Ansible/Puppet/Fabric
 
 ###Reference
-The below can be overridden by exporting new env values before executing the script
+The below can be overridden by exporting new environmental shell values before executing the script (See example under usage)
 
-export USERNAME=deployer
-export USERNAME_UID=2079
-export SSH_PUB_KEY1='YOUR PUBLIC KEY HERE'
+*export USERNAME=deployer
+*export USERNAME_UID=2079
+*export SSH_PUB_KEY1='YOUR PUBLIC KEY HERE'
 
 ###Requires
 
-Ubuntu 16.04 x64
-WGET
-BASH
-SUDERS
+*Ubuntu 16.04 x64
+*WGET
+*BASH
+*SUDERS
 
 ### Version
 0.0.1
