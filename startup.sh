@@ -28,11 +28,12 @@ clear
 ROOT_UID=0
 E_NOTROOT=1
 HOMEDIR=/home
-USERNAME="deploy"
+USERNAME=${USERNAME:-deploy}
 USERNAME_UID="1979"
 SUDOERS_DEPLOYFILE="/etc/sudoers.d/automate-deploy"
 SSHDIR=".ssh"
 USER_SSH_DIR="$HOMEDIR/$USERNAME/$SSHDIR"
+SSH_PUB_KEY1=${SSH_PUB_KEY1:-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRTnJn7fp32e3pitCOW5vuo4NB3wZw4arz286mk4CR/PzNyQvLE4YBKhSKCLg0Cw7iP2E8xLmUtDemjEKQZALzGZRTCDQN4Qqs4M0NFYiL1G5kYA806R6qCVxjhrQG85AK0AW5nk/rVw4IgD2/y4ojmhGCvbdW9nN522r8nZjs4d175nMyJRfohOqrNZAz/dD1Ph8U5kljg/Jz80A4t6x9E6Rl+8VolKnvo7U/k4yGWOhxsj6KutqFmdJVaiP+UCL9y8FeM4qHsVe5MpQGN+RxANhDf0OiMHZh9l0ani2Gqf3HyCbHJgE98aA1TNxVi0fJUy0gOfAsM7hzj3TxY5yR FOWLKS@AVPHR-2F1SP32}
 
 RELEASE=$(lsb_release -c | cut -f 2 -d $'\t')
 DISTRO=$(lsb_release -i | cut -f 2 -d $'\t')
@@ -92,7 +93,7 @@ check_errs $? "Failed to create directory $USER_SSH_DIR"
 chmod 600 $USER_SSH_DIR
 check_errs $? "Failed change permission on $USER_SSH_DIR"
 
-echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRTnJn7fp32e3pitCOW5vuo4NB3wZw4arz286mk4CR/PzNyQvLE4YBKhSKCLg0Cw7iP2E8xLmUtDemjEKQZALzGZRTCDQN4Qqs4M0NFYiL1G5kYA806R6qCVxjhrQG85AK0AW5nk/rVw4IgD2/y4ojmhGCvbdW9nN522r8nZjs4d175nMyJRfohOqrNZAz/dD1Ph8U5kljg/Jz80A4t6x9E6Rl+8VolKnvo7U/k4yGWOhxsj6KutqFmdJVaiP+UCL9y8FeM4qHsVe5MpQGN+RxANhDf0OiMHZh9l0ani2Gqf3HyCbHJgE98aA1TNxVi0fJUy0gOfAsM7hzj3TxY5yR FOWLKS@AVPHR-2F1SP32' > "$USER_SSH_DIR/authorized_keys"
+echo $SSH_PUB_KEY1 > "$USER_SSH_DIR/authorized_keys"
 check_errs $? "Failed to add public key to account $USER_SSH_DIR/authorized_keys"
 
 chmod 700 "$USER_SSH_DIR/authorized_keys"
