@@ -2,10 +2,10 @@
 # -*- Mode: sh; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 #
 # Authors:
-#   Kevin Fowlks <fowkl1kd@gmail.com>
+#   Kevin Fowlks <fowlk1kd@gmail.com>
 #
 # Description:
-#   A post-installation bash script for ubuntu 16.4
+#   A post-installation bash script for Ubuntu 16.04+
 #
 # Legal Preamble:
 #
