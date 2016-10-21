@@ -52,3 +52,11 @@ Step - 1
 
 Step - 2
 ![Alt text](/vultr-shot2.PNG?raw=true "Vultr Startup Scripts - Editor")
+
+Step - 3
+
+Log into newly created server from the account the public key was provided.
+
+```bash
+ssh -v deployer@<hostname>
+```
