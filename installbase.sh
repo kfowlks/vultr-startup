@@ -87,5 +87,8 @@ docker run -d --name gitlab-runner --restart always \
   gitlab/gitlab-runner:alpine
 check_errs $? "Failed to configure docker"
 
+sudo usermod -aG docker deployer
+check_errs $? "Failed to add user deployer to group docker"
+
 #mkdir -p /srv/gitlab-runner/config
 #check_errs $? "Failed to create /srv/gitlab-runner/config directory"
