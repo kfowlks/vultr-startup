@@ -28,6 +28,7 @@ clear
 ROOT_UID=0
 E_NOTROOT=1
 ADMIN_EMAIL=fowlk1kd@gmail.com
+DEBIAN_FRONTEND=noninteractive
 
 echoRed() {
   echo -e "\E[1;31m$1"
@@ -77,12 +78,16 @@ fi
 #sudo apt-add-repository --yes --force-yes ppa:ansible/ansible
 #sudo apt-get --yes --force-yes update
 #sudo apt-get --yes --force-yes install ansible
+export $DEBIAN_FRONTEND
 
 apt-get --yes --force-yes update
 check_errs $? "Failed to apt-get update"
 
 apt-get --yes --force-yes upgrade
 check_errs $? "Failed to apt-get upgrade"
+
+apt-get --yes --force-yes install debconf-doc
+check_errs $? "Failed to apt-get debconf-doc"
 
 apt-get --yes --force-yes install unattended-upgrades
 check_errs $? "Failed to configure unattended-upgrades"
@@ -103,7 +108,6 @@ echo '    "${distro_id} ${distro_codename}-security";' >>  /etc/apt/apt.conf.d/5
 echo '    "${distro_id} ${distro_codename}-updates";' >>  /etc/apt/apt.conf.d/50unattended-upgrades
 echo '//  "${distro_id} ${distro_codename}-proposed-updates";' >>  /etc/apt/apt.conf.d/50unattended-upgrades
 echo '};' >>  /etc/apt/apt.conf.d/50unattended-upgrades
-
 
 apt-get --yes --force-yes install fail2ban
 check_errs $? "Failed to install fail2ban"
