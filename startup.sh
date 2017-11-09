@@ -87,9 +87,6 @@ fi
 useradd -u $USERNAME_UID --shell '/bin/bash' $USERNAME
 check_errs $? "Failed create user $USERNAME"
 
-chown $USERNAME:$USERNAME $USER_HOME
-check_errs $? "Failed change ownership of $USER_HOME"
-
 echoGreen "$USERNAME with UID:$USERNAME_UID was successfully created!"
 
 usermod -aG sudo $USERNAME
@@ -97,6 +94,9 @@ check_errs $? "Failed to add user $USERNAME to group sudo"
 
 mkdir -p $USER_SSH_DIR
 check_errs $? "Failed to create directory $USER_SSH_DIR"
+
+chown $USERNAME:$USERNAME $USER_HOME
+check_errs $? "Failed change ownership of $USER_HOME"
 
 chmod 700 $USER_SSH_DIR
 check_errs $? "Failed change permission on $USER_SSH_DIR"
