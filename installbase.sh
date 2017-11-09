@@ -115,6 +115,9 @@ check_errs $? "Failed to install fail2ban"
 #ufw allow from {your-ip} to any port 22
 #check_errs $? "Failed to configure ufw #1"
 
+ufw allow 22
+check_errs $? "Failed to configure ufw #1"
+
 ufw allow 80
 check_errs $? "Failed to configure ufw #2"
 
