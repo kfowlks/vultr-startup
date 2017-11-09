@@ -27,6 +27,7 @@ clear
 
 ROOT_UID=0
 E_NOTROOT=1
+ADMIN_EMAIL=fowlk1kd@gmail.com
 
 echoRed() {
   echo -e "\E[1;31m$1"
@@ -83,7 +84,7 @@ check_errs $? "Failed to apt-get update"
 apt-get --yes --force-yes upgrade
 check_errs $? "Failed to apt-get upgrade"
 
-apt-get install unattended-upgrades
+apt-get --yes --force-yes install unattended-upgrades
 check_errs $? "Failed to configure unattended-upgrades"
 
 truncate -s 0 /etc/apt/apt.conf.d/10periodic
@@ -104,7 +105,7 @@ echo '//  "${distro_id} ${distro_codename}-proposed-updates";' >>  /etc/apt/apt.
 echo '};' >>  /etc/apt/apt.conf.d/50unattended-upgrades
 
 
-apt-get install fail2ban
+apt-get --yes --force-yes install fail2ban
 check_errs $? "Failed to install fail2ban"
 
 ufw allow from {your-ip} to any port 22
@@ -141,9 +142,18 @@ check_errs $? "Failed to config sshd config #5"
 sed -i "s/.*PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
 check_errs $? "Failed to config sshd config #6"
 
+sshd -t
+check_errs $? "Failed sshd config is not valid"
+
 service sshd restart
 check_errs $? "Failed to restart sshd"
 
+# Install Log Watch
+apt-get --yes --force-yes install logwatch
+check_errs $? "Failed to install logwatch"
+
+echo >> '/usr/sbin/logwatch --output mail --mailto $ADMIN_EMAIL --detail high' >> /etc/cron.daily/00logwatch
+check_errs $? "Failed to configure logwatch"
 
 # Install Docker
 curl -sSL https://get.docker.com/ | sh
