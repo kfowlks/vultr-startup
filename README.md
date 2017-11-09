@@ -60,3 +60,13 @@ Log into newly created server from the account the public key was provided.
 ```bash
 ssh -v deployer@<hostname>
 ```
+
+Optional - Run InstallBase:
+
+```bash
+sudo su -
+bash <(wget -qO- https://raw.githubusercontent.com/kfowlks/vultr-startup/master/installbase.sh)
+```
+
+bash <(wget -qO- https://raw.githubusercontent.com/kfowlks/vultr-startup/master/installbase.sh)
+
