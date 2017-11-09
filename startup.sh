@@ -33,6 +33,7 @@ USERNAME_UID=${USERNAME_UID:-1979}
 SUDOERS_DEPLOYFILE="/etc/sudoers.d/automate-deploy"
 SSHDIR=".ssh"
 USER_SSH_DIR="$HOMEDIR/$USERNAME/$SSHDIR"
+USER_HOME="$HOMEDIR/$USERNAME"
 SSH_PUB_KEY1=${SSH_PUB_KEY1:-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRTnJn7fp32e3pitCOW5vuo4NB3wZw4arz286mk4CR/PzNyQvLE4YBKhSKCLg0Cw7iP2E8xLmUtDemjEKQZALzGZRTCDQN4Qqs4M0NFYiL1G5kYA806R6qCVxjhrQG85AK0AW5nk/rVw4IgD2/y4ojmhGCvbdW9nN522r8nZjs4d175nMyJRfohOqrNZAz/dD1Ph8U5kljg/Jz80A4t6x9E6Rl+8VolKnvo7U/k4yGWOhxsj6KutqFmdJVaiP+UCL9y8FeM4qHsVe5MpQGN+RxANhDf0OiMHZh9l0ani2Gqf3HyCbHJgE98aA1TNxVi0fJUy0gOfAsM7hzj3TxY5yR FOWLKS@AVPHR-2F1SP32}
 
 RELEASE=$(lsb_release -c | cut -f 2 -d $'\t')
@@ -85,6 +86,9 @@ fi
 
 useradd -u $USERNAME_UID --shell '/bin/bash' $USERNAME
 check_errs $? "Failed create user $USERNAME"
+
+chown $USERNAME:$USERNAME $USER_HOME
+check_errs $? "Failed change ownership of $USER_HOME"
 
 echoGreen "$USERNAME with UID:$USERNAME_UID was successfully created!"
 
