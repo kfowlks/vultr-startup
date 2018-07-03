@@ -8,19 +8,19 @@ This single bash script can be called from the vultr Startup Script section of y
  
 After this all other changes should be issued from your server management tools e.g. Ansible/Puppet/Fabric
 
-###Reference
+### Reference
 The below can be overridden by exporting new environmental shell values before executing the script (See example under usage)
 
 * export USERNAME=deployer
 * export USERNAME_UID=2079
 * export SSH_PUB_KEY1='YOUR PUBLIC KEY HERE'
 
-###Requires
+### Requires
 
 * Ubuntu 16.04 x64
 * WGET
 * BASH
-* SUDERS
+* SUDOERS
 
 ### Version
 0.0.1
